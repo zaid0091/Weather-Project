@@ -91,12 +91,35 @@ function getMoonPhase(): { phase: string; illumination: number } {
   return { phase: "New Moon", illumination: 0 };
 }
 
-function extractHour(timeStr: string): number {
-  const match = timeStr.match(/(\d+):(\d+)/);
-  if (match) {
-    return parseInt(match[1], 10);
-  }
-  return 0;
+interface NominatimResult {
+  place_id: number;
+  display_name: string;
+  state?: string;
+  country?: string;
+  lat: string;
+  lon: string;
+  type?: string;
+  address?: {
+    country_code?: string;
+  };
+}
+
+interface WttrDayData {
+  date?: string;
+  maxtempC?: string;
+  mintempC?: string;
+  hourly?: Array<{
+    weatherCode?: string;
+    chanceofrain?: string;
+    WindspeedKmph?: string;
+    uvIndex?: string;
+  }>;
+  astronomy?: Array<{
+    sunrise?: string;
+    sunset?: string;
+    moonrise?: string;
+    moonset?: string;
+  }>;
 }
 
 export async function searchLocations(query: string): Promise<SearchResult[]> {
@@ -112,7 +135,7 @@ export async function searchLocations(query: string): Promise<SearchResult[]> {
     const data = await response.json();
     if (!data.length) return [];
 
-    return data.map((result: any) => ({
+    return data.map((result: NominatimResult) => ({
       id: result.place_id || generateId(),
       name: result.display_name.split(',')[0],
       region: result.state || "",
@@ -150,8 +173,6 @@ export async function getWeatherData(location: SavedLocation | { lat: number; lo
 
     const data = await response.json();
     const currentData = data.current_condition?.[0] || {};
-    const weatherDesc = data.weather?.description || "";
-    const hourlyData = data.hourly || [];
     const dailyData = data.weather || [];
     
     const weatherCode = parseInt(currentData.weatherCode || "116", 10);
@@ -231,7 +252,7 @@ export async function getWeatherData(location: SavedLocation | { lat: number; lo
       }
     }
 
-    const daily: DailyForecast[] = dailyData.map((day: any, i: number) => {
+    const daily: DailyForecast[] = dailyData.map((day: WttrDayData, i: number) => {
       const maxCode = parseInt(day.maxtempC || "116", 10);
       return {
         date: day.date || new Date(now.getTime() + i * 86400000).toISOString().split('T')[0],

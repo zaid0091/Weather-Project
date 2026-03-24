@@ -45,7 +45,6 @@ export function DailyForecast() {
 
           const barLeft = ((min - minTemp) / range) * 100;
           const barRight = ((maxTemp - max) / range) * 100;
-          const barWidth = 100 - barLeft - barRight;
 
           return (
             <div

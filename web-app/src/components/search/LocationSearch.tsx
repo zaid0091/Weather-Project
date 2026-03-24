@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { searchLocations } from "@/services/weatherService";
 import { useWeatherStore } from "@/stores/weatherStore";
 import { debounce } from "@/lib/utils";
-import { Search, MapPin, X, Building2, Globe } from "lucide-react";
+import { Search, MapPin, X, Globe } from "lucide-react";
 import type { SearchResult } from "@/types/weather";
 
 interface LocationSearchProps {
@@ -104,8 +104,6 @@ export function LocationSearch({ onClose }: LocationSearchProps) {
       .map((char) => 127397 + char.charCodeAt(0));
     return String.fromCodePoint(...codePoints);
   };
-
-  const showResults = query.length >= 2 && (results.length > 0 || loading || (results.length === 0 && !loading));
 
   return (
     <div ref={containerRef} className="relative w-full">
