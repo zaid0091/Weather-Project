@@ -13,23 +13,6 @@ import type {
 } from "@/types/weather";
 import { generateId } from "@/lib/utils";
 
-const isClient = typeof window !== "undefined";
-
-const storage = {
-  getItem: (name: string): string | null => {
-    if (!isClient) return null;
-    return localStorage.getItem(name);
-  },
-  setItem: (name: string, value: string): void => {
-    if (!isClient) return;
-    localStorage.setItem(name, value);
-  },
-  removeItem: (name: string): void => {
-    if (!isClient) return;
-    localStorage.removeItem(name);
-  },
-};
-
 interface WeatherState {
   currentLocation: SavedLocation | null;
   weatherData: WeatherData;
@@ -221,7 +204,6 @@ export const useWeatherStore = create<WeatherState>()(
     }),
     {
       name: "skyscope-weather-store",
-      storage,
       partialize: (state) => ({
         savedLocations: state.savedLocations,
         preferences: state.preferences,
