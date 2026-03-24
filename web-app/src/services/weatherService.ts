@@ -66,7 +66,11 @@ function mapWeatherCode(code: number): { text: string; icon: string; code: numbe
     392: { text: "Light Snow Showers", icon: "snow" },
     395: { text: "Moderate Snow Showers", icon: "snow" },
   };
-  return { ...codeMap[code], code } || { text: "Unknown", icon: "cloudy", code };
+  const result = codeMap[code];
+  if (result) {
+    return { ...result, code };
+  }
+  return { text: "Unknown", icon: "cloudy", code };
 }
 
 function getMoonPhase(): { phase: string; illumination: number } {
