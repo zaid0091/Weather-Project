@@ -18,6 +18,7 @@ import { MinutelyPrecipitation } from "@/components/weather/MinutelyPrecipitatio
 import { AlertBanner } from "@/components/weather/AlertBanner";
 import { useWeatherStore } from "@/stores/weatherStore";
 import { RefreshCw, MapPin, Map, Bell, Settings, Search } from "lucide-react";
+import { WeatherMap } from "@/components/weather/WeatherMap";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<TabId>("home");
@@ -144,13 +145,16 @@ export default function Home() {
         )}
 
         {activeTab === "map" && (
-          <div className="px-5 py-16 text-center">
-            <div className="w-16 h-16 mx-auto rounded-2xl card flex items-center justify-center mb-6">
-              <Map size={28} className="text-muted" />
+          <div className="px-5 pt-4 pb-8">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-1 h-5 rounded-full bg-gradient-to-b from-green-500 to-emerald-500" />
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-muted">Weather Map</h2>
             </div>
-            <h2 className="text-xl font-semibold text-white mb-2">Weather Maps</h2>
-            <p className="text-muted max-w-xs mx-auto">
-              Interactive radar and satellite maps coming soon.
+            <div className="h-[500px]">
+              <WeatherMap />
+            </div>
+            <p className="text-center text-muted text-sm mt-4">
+              Showing weather for {currentLocation?.name || "your location"}
             </p>
           </div>
         )}
