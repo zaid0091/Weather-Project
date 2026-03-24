@@ -152,7 +152,13 @@ export async function searchLocations(query: string): Promise<SearchResult[]> {
   }
 }
 
-export async function getWeatherData(location: SavedLocation | { lat: number; lon: number }): Promise<{
+type LocationInput = SavedLocation | { lat: number; lon: number };
+
+function isSavedLocation(loc: LocationInput): loc is SavedLocation {
+  return "name" in loc;
+}
+
+export async function getWeatherData(location: LocationInput): Promise<{
   current: CurrentWeather;
   hourly: HourlyForecast[];
   daily: DailyForecast[];
@@ -162,8 +168,8 @@ export async function getWeatherData(location: SavedLocation | { lat: number; lo
   summary: string;
 }> {
   const lat = location.lat;
-  const lon = "lon" in location ? location.lon : location.lat;
-  const locationName = "name" in location ? (location as SavedLocation).name : `${lat},${lon}`;
+  const lon = isSavedLocation(location) ? location.lon : location.lat;
+  const locationName = isSavedLocation(location) ? location.name : `${lat},${lon}`;
   
   try {
     const response = await fetch(`${WTTR_BASE}/${encodeURIComponent(locationName)}?format=j1`);
