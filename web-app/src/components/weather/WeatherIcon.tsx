@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 
 interface WeatherIconProps {
-  condition: string;
+  condition: string | { text?: string; icon?: string };
   size?: "xs" | "sm" | "md" | "lg" | "xl" | "hero";
   className?: string;
   animated?: boolean;
@@ -60,7 +60,8 @@ export function WeatherIcon({
   className,
   animated = true,
 }: WeatherIconProps) {
-  const iconKey = condition.toLowerCase().replace(/\s+/g, "-").replace("_", "-");
+  const conditionText = typeof condition === "string" ? condition : (condition.icon || "sunny");
+  const iconKey = conditionText.toLowerCase().replace(/\s+/g, "-").replace("_", "-");
   const icon = iconPaths[iconKey] || iconPaths.sunny;
   const config = sizeConfig[size];
 

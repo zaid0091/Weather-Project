@@ -15,7 +15,7 @@ function generateId(): string {
   return Math.random().toString(36).substring(2) + Date.now().toString(36);
 }
 
-function mapWeatherCode(code: number): { text: string; icon: string } {
+function mapWeatherCode(code: number): { text: string; icon: string; code: number } {
   const codeMap: Record<number, { text: string; icon: string }> = {
     113: { text: "Sunny", icon: "sunny" },
     116: { text: "Partly Cloudy", icon: "partly-cloudy" },
@@ -66,7 +66,7 @@ function mapWeatherCode(code: number): { text: string; icon: string } {
     392: { text: "Light Snow Showers", icon: "snow" },
     395: { text: "Moderate Snow Showers", icon: "snow" },
   };
-  return codeMap[code] || { text: "Unknown", icon: "cloudy" };
+  return { ...codeMap[code], code } || { text: "Unknown", icon: "cloudy", code };
 }
 
 function getMoonPhase(): { phase: string; illumination: number } {
