@@ -83,5 +83,3 @@ export function Navigation({ activeTab, onTabChange }: NavigationProps) {
     </nav>
   );
 }
-
-export type { TabId };

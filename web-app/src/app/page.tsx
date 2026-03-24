@@ -4,7 +4,9 @@ import { useState, useEffect } from "react";
 import { useWeather } from "@/hooks/useWeather";
 import { useGeolocation } from "@/hooks/useGeolocation";
 import { Header } from "@/components/layout/Header";
-import { Navigation, TabId } from "@/components/layout/Navigation";
+import { Navigation } from "@/components/layout/Navigation";
+
+type TabId = "home" | "locations" | "map" | "alerts" | "settings";
 import { SettingsPanel } from "@/components/settings/SettingsPanel";
 import { CurrentConditions } from "@/components/weather/CurrentConditions";
 import { HourlyForecast } from "@/components/weather/HourlyForecast";
