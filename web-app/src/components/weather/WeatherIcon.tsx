@@ -60,10 +60,10 @@ export function WeatherIcon({
   className,
   animated = true,
 }: WeatherIconProps) {
-  const conditionText = typeof condition === "string" ? condition : (condition.icon || "sunny");
+  const conditionText = typeof condition === "string" ? condition : (condition?.icon || "sunny");
   const iconKey = conditionText.toLowerCase().replace(/\s+/g, "-").replace("_", "-");
   const icon = iconPaths[iconKey] || iconPaths.sunny;
-  const config = sizeConfig[size];
+  const config = sizeConfig[size] || sizeConfig.lg;
 
   return (
     <div className={cn("relative flex items-center justify-center", className)}>

@@ -66,7 +66,7 @@ export function HourlyForecast() {
               </span>
 
               <WeatherIcon
-                condition={hour.condition.icon}
+                condition={hour.condition?.icon || "sunny"}
                 size={isNow ? "lg" : "md"}
                 className={isNow ? "text-white" : "text-white/70"}
               />

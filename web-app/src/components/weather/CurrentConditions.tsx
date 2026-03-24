@@ -39,7 +39,7 @@ export function CurrentConditions() {
     <div className="flex flex-col items-center py-8 animate-fade-in-up">
       <div className="relative">
         <WeatherIcon
-          condition={weather.condition.icon}
+          condition={weather.condition?.icon || "sunny"}
           size="hero"
           className="text-white"
         />

@@ -59,7 +59,7 @@ export function DailyForecast() {
               </span>
 
               <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
-                <WeatherIcon condition={day.condition.icon} size="sm" />
+                <WeatherIcon condition={day.condition?.icon || "sunny"} size="sm" />
               </div>
 
               <span className="w-8 text-right text-sm text-muted flex-shrink-0">
